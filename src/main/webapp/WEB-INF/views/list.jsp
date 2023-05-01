@@ -52,6 +52,12 @@
 					<c:if test="${pageInfo.currentPageNum gt 1 }">
 						<c:url value="/list" var="pageLink">
 							<c:param name="page" value="${pageInfo.currentPageNum - 1 }" />
+							<c:if test="${not empty param.search }">
+								<c:param name="search" value="${param.search }" />
+							</c:if>
+							<c:if test="${not empty param.type }">
+								<c:param name="type" value="${param.type }" />
+							</c:if>
 						</c:url>
 						<li class="page-item">
 							<a class="page-link" href="${pageLink }">
@@ -63,8 +69,11 @@
 					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum">
 						<c:url value="/list" var="pageLink">
 							<c:param name="page" value="${pageNum }" />
-							<c:if test="${not empty param.search }" >
+							<c:if test="${not empty param.search }">
 								<c:param name="search" value="${param.search }" />
+							</c:if>
+							<c:if test="${not empty param.type }">
+								<c:param name="type" value="${param.type }" />
 							</c:if>
 						</c:url>
 						<li class="page-item">
@@ -76,6 +85,12 @@
 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
 						<c:url value="/list" var="pageLink">
 							<c:param name="page" value="${pageInfo.currentPageNum + 1 }" />
+							<c:if test="${not empty param.search }">
+								<c:param name="search" value="${param.search }" />
+							</c:if>
+							<c:if test="${not empty param.type }">
+								<c:param name="type" value="${param.type }" />
+							</c:if>
 						</c:url>
 						<li class="page-item">
 							<a class="page-link" href="${pageLink }">
