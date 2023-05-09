@@ -54,8 +54,3 @@ public interface MemberMapper {
 	Integer update(Member member);
 }
 
-
-
-
-
-

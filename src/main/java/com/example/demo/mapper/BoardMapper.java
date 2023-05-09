@@ -38,8 +38,7 @@ public interface BoardMapper {
 			UPDATE Board
 			SET 
 				title = #{title},
-				body = #{body},
-				writer = #{writer}
+				body = #{body}
 			WHERE
 				id = #{id}
 			""")
@@ -139,8 +138,3 @@ public interface BoardMapper {
 
 	
 }
-
-
-
-
-
