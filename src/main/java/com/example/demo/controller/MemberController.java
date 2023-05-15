@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.*;
 import com.example.demo.domain.*;
 import com.example.demo.service.*;
 
-import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 
 @Controller
@@ -21,6 +20,25 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
+	
+	@GetMapping("checkEmail/{email}")
+	@ResponseBody
+	public Map<String, Object> checkEmail(@PathVariable("email") String email) {
+		return service.checkEmail(email);
+	}
+	
+	@GetMapping("checkNickName/{nickName}")
+	@ResponseBody
+	public Map<String, Object> checkNickName(@PathVariable("nickName") String nickName) {
+		return service.checkNickName(nickName);
+	}
+	
+	@GetMapping("checkId/{id}")
+	@ResponseBody
+	public Map<String, Object> checkId(@PathVariable("id") String id) {
+		
+		return service.checkId(id);
+	}
 
 	@GetMapping("signup")
 	@PreAuthorize("isAnonymous()")
@@ -51,7 +69,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("list")
-	@PreAuthorize("hasAuthority('MSG')")
+	@PreAuthorize("hasAuthority('admin')")
 	public void list(Model model) {
 		List<Member> list = service.listMember();
 		model.addAttribute("memberList", list);
@@ -59,7 +77,7 @@ public class MemberController {
 	
 	// 경로: /member/info?id=asdf
 	@GetMapping("info")
-	@PreAuthorize("hasAuthority('MSG') or (isAuthenticated() and (authentication.name eq #id))")
+	@PreAuthorize("hasAuthority('admin') or (isAuthenticated() and (authentication.name eq #id))")
 	public void info(String id, Model model) {
 		
 		Member member = service.get(id);
