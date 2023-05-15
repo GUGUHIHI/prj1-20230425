@@ -141,4 +141,3 @@ $("#inputPassword, #inputPasswordCheck").keyup(function() {
 
 	enableSubmit();
 })
-

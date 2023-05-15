@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.access.prepost.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +24,18 @@ public class MemberController {
 	
 	@GetMapping("checkEmail/{email}")
 	@ResponseBody
-	public Map<String, Object> checkEmail(@PathVariable("email") String email) {
-		return service.checkEmail(email);
+	public Map<String, Object> checkEmail(
+			@PathVariable("email") String email,
+			Authentication authentication) {
+		return service.checkEmail(email, authentication);
 	}
 	
 	@GetMapping("checkNickName/{nickName}")
 	@ResponseBody
-	public Map<String, Object> checkNickName(@PathVariable("nickName") String nickName) {
-		return service.checkNickName(nickName);
+	public Map<String, Object> checkNickName(
+			@PathVariable("nickName") String nickName,
+			Authentication authentication) {
+		return service.checkNickName(nickName, authentication);
 	}
 	
 	@GetMapping("checkId/{id}")
@@ -69,7 +74,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("list")
-	@PreAuthorize("hasAuthority('admin')")
+	@PreAuthorize("hasAuthority('MSG')")
 	public void list(Model model) {
 		List<Member> list = service.listMember();
 		model.addAttribute("memberList", list);
@@ -77,7 +82,7 @@ public class MemberController {
 	
 	// 경로: /member/info?id=asdf
 	@GetMapping("info")
-	@PreAuthorize("hasAuthority('admin') or (isAuthenticated() and (authentication.name eq #id))")
+	@PreAuthorize("hasAuthority('MSG') or (isAuthenticated() and (authentication.name eq #id))")
 	public void info(String id, Model model) {
 		
 		Member member = service.get(id);
