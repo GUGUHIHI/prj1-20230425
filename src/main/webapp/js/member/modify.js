@@ -44,7 +44,6 @@ $("#checkEmailBtn").click(function() {
 	});
 });
 
-
 // 닉네임 중복확인버튼 클릭시
 $("#checkNickNameBtn").click(function() {
 	const nickName = $("#inputNickName").val();
@@ -63,13 +62,12 @@ $("#checkNickNameBtn").click(function() {
 				$("#availableNickNameMessage").addClass("d-none");
 				$("#notAvailableNickNameMessage").removeClass("d-none");
 				// 중복확인 안되었다는 표시
-				checkNickName = false
+				checkNickName = false;
 			}
 		},
 		complete: enableSubmit 
 	});
 });
-
 
 $("#inputPassword, #inputPasswordCheck").keyup(function() {
 	const pw1 = $("#inputPassword").val();
