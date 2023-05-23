@@ -19,6 +19,12 @@ public class MemberService {
 	private MemberMapper mapper;
 	
 	@Autowired
+	private BoardLikeMapper likeMapper;
+	
+	@Autowired
+	private CommentMapper commentMapper;
+	
+	@Autowired
 	private BoardService boardService;
 	
 	@Autowired
@@ -51,8 +57,14 @@ public class MemberService {
 		if (passwordEncoder.matches(member.getPassword(), oldMember.getPassword())) {
 			// 암호가 같으면?
 			
+			// 이 회원이 작성한 댓글 삭제
+			commentMapper.deleteByMemberId(member.getId());
+			
 			// 이 회원이 작성한 게시물 row 삭제
 			boardService.removeByWriter(member.getId());
+			
+			// 이 회원이 좋아요한 레코드 삭제
+			likeMapper.deleteByMemberId(member.getId());
 			
 			// 회원 테이블 삭제
 			cnt = mapper.deleteById(member.getId());

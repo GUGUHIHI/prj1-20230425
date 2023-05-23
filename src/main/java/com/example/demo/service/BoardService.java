@@ -30,6 +30,9 @@ public class BoardService {
 	
 	@Autowired
 	private BoardLikeMapper likeMapper;
+	
+	@Autowired
+	private CommentMapper commentMapper;
 
 	public List<Board> listBoard() {
 		List<Board> list = mapper.selectAll();
@@ -94,9 +97,14 @@ public class BoardService {
 	}
 
 	public boolean remove(Integer id) {
+
+		// 댓글 테이블 지우기
+		commentMapper.deleteByBoardId(id);
 		
 		// 좋아요 테이블 지우기
 		likeMapper.deleteByBoardId(id);
+		
+		
 
 		// 파일명 조회
 		List<String> fileNames = mapper.selectFileNamesByBoardId(id);
@@ -113,6 +121,8 @@ public class BoardService {
 					.build();
 			s3.deleteObject(dor);
 		}
+		
+		
 
 		// 게시물 테이블의 데이터 지우기
 		int cnt = mapper.deleteById(id);
